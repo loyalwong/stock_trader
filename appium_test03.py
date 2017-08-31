@@ -12,8 +12,12 @@ desired_caps['appPackage'] = 'com.guotai.dazhihui'
 desired_caps['appActivity'] = 'com.android.dazhihui.view.screen.NewInitScreen'
 desired_caps['noReset'] = True
 desired_caps['fullReset'] = False
+desired_caps['session-override'] = True
+desired_caps['unicodeKeyboard'] = True
 driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 
+c1 = driver.contexts
+c2 = driver.current_context
 #警告框
 try:
     elem1 = driver.find_element_by_id('com.guotai.dazhihui:id/layout_mainpage_nrng_icon')
@@ -52,8 +56,7 @@ except Exception:
     print("error")
 else:
     elem4.clear()
-    elem4.send_keys("17765178235")
-    elem4.submit()
+    elem4.send_keys('17765178235')
     elem5 = driver.find_element_by_id('com.guotai.dazhihui:id/btn_register_get_verifycode')
     elem5.click()
     elem6 = driver.find_element_by_id('com.guotai.dazhihui:id/et_register_verify_code')

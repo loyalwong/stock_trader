@@ -9,15 +9,22 @@ desired_caps['platformVersion'] = '6.0'
 desired_caps['deviceName'] = 'QMS4C15C28005345'
 desired_caps['udid'] = 'QMS4C15C28005345'
 desired_caps['appPackage'] = 'com.guotai.dazhihui'
-desired_caps['appActivity'] = 'com.android.dazhihui.view.screen.NewInitScreen'
+desired_caps['appActivity'] = 'com.android.dazhihui.view.screen.InitScreen'
 desired_caps['noReset'] = True
 desired_caps['fullReset'] = False
 desired_caps['session-override'] = True
 desired_caps['unicodeKeyboard'] = True
 driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 
-c1 = driver.contexts
-c2 = driver.current_context
+try:
+#    elem1 = driver.find_element_by_xpath('//android.widget.TextView[contains(@text,"资讯")]')
+    elem2 = driver.find_element_by_class_name('//android.widget.TextView[contains(@text,"资讯")]')
+except Exception:
+    print("no alert need press")
+else:
+    driver.find_element_by_xpath('//android.widget.TextView[contains(@text,"取消")]').click()
+
+
 #警告框
 try:
     elem1 = driver.find_element_by_id('com.guotai.dazhihui:id/layout_mainpage_nrng_icon')

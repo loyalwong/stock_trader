@@ -13,7 +13,7 @@ class guotai(object):
         desired_caps['noReset'] = True
         desired_caps['fullReset'] = False
         desired_caps['session-override'] = True
-        desired_caps['unicodeKeyboard'] = True
+#        desired_caps['unicodeKeyboard'] = True
         self.driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 
     def alert_popup(self):
@@ -21,15 +21,32 @@ class guotai(object):
             elem1 = self.driver.find_element_by_xpath('//android.widget.TextView[contains(@text,"新股申购提醒")]')
         except Exception:
             print("no alert need press")
-            return True
         else:
             self.driver.find_element_by_xpath('//android.widget.TextView[contains(@text,"取消")]').click()
-            return True
+        return True
 
     def mainscreen_in(self):
+        self.alert_popup()
+        try:
+            elem1 = self.driver.find_element_by_xpath('//android.widget.TextView[contains(@text,"我的")]')
+        except Exception:
+            print("already in mainscreen")
+        else:
+            elem1.click()
         return True
 
     def appacount_login(self):
+        try:
+            elem1 = self.driver.find_element_by_id('com.guotai.dazhihui:id/tv_usercenter_nickname')
+        except Exception:
+            try:
+                elem2 = self.self.driver.find_element_by_xpath('//android.widget.Button[contains(@text,"立即登录/注册")]')
+            except Exception:
+                print("error")
+            else:
+                elem2.click()
+        else:
+            print("already login app account")
         return True
 
     def stockaccount_login(self):

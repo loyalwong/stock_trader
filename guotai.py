@@ -20,7 +20,6 @@ class guotai ( object ):
         # desired_caps['session-override'] = True
         # desired_caps['unicodeKeyboard'] = True
 
-
     def alert_popup_kickout(self):
         try:
             elem1 = self.driver.find_element_by_xpath ( '//android.widget.TextView[contains(@text,"新股申购提醒")]' )
@@ -85,7 +84,7 @@ class guotai ( object ):
                 return True
 
     def stockaccount_login(self):
-        if self.appacount_login == True:
+        if self.appacount_login ( ) == True:
             try:  # check already login
                 elem1 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/tv_usercenter_zjaccount' )
             except Exception:
@@ -93,7 +92,7 @@ class guotai ( object ):
                     account = helpers.file2dict ( "./config/account.json" )
                     password = account['stockaccount']['password']
                     elem2 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/btn_usercenter_login' )
-                    elem2.click()
+                    elem2.click ( )
                     elem3 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/et_password' )
                     elem3.clear ( )
                     elem3.send_keys ( password )
@@ -108,16 +107,31 @@ class guotai ( object ):
                 return True
 
     def stock_buy(self, code, price, qty):
-        if self.stockacount_login == True:
+        if self.stockacount_login ( ) == True:
             try:
-                elem1 = self.self.driver.find_element_by_xpath ('//android.widget.TextView[contains(@text,"交易")]' )
+                elem1 = self.self.driver.find_element_by_xpath ( '//android.widget.TextView[contains(@text,"交易")]' )
             except Exception:
                 print ( "something wrong in deal screen" )
                 return False
             else:
-                elem1.click()
-                elem2 = self.self.driver.find_element_by_xpath ( '//android.widget.TextView[contains(@text,"买入")]' )
-
+                elem1.click ( )
+                try:
+                    elem2 = self.driver.find_element_by_xpath ( '//android.widget.TextView[contains(@text,"买入")]' )
+                    elem3 = elem2.find_element_by_xpath ( '..' )
+                    elem3.click
+                    elem4 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/stock_code_et' )
+                    elem4.clear ( )
+                    elem4.send_keys ( code )
+                    elem5 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/stock_price_et' )
+                    elem5.clear ( )
+                    elem5.send_keys ( price )
+                    elem6 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/stock_operate_et' )
+                    elem6.clear ( )
+                    elem6.send_keys ( price )
+                except Exception:
+                    return False
+                else:
+                    return True
 
     def stock_sell(self, code, price, qty):
         return True

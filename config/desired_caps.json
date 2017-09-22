@@ -1,0 +1,11 @@
+{
+  "platformName"      : "Android",
+  "platformVersion"  : "6.0",
+  "deviceName"        : "QMS4C15C28005345",
+  "udid"               : "QMS4C15C28005345",
+  "appPackage"        : "com.guotai.dazhihui",
+  "appActivity"       : "com.android.dazhihui.view.screen.MainScreen",
+  "noReset"           : "True",
+  "fullReset"         : "False",
+  "session-override" : "True"
+}

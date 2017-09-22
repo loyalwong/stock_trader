@@ -1,5 +1,4 @@
 {
-  "login_api": "https://trade.gf.com.cn/login",
   "appaccount": {
     "user": "17765178235",
     "sms_verify_code": "123456"

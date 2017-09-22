@@ -1,23 +1,25 @@
 # coding: utf-8
 from time import sleep
 from appium import webdriver
-from . import helpers
+import helpers
 
 
 class guotai ( object ):
     def __init__(self):
-        desired_caps = {}
-        desired_caps['platformName'] = 'Android'
-        desired_caps['platformVersion'] = '6.0'
-        desired_caps['deviceName'] = 'QMS4C15C28005345'
-        desired_caps['udid'] = 'QMS4C15C28005345'
-        desired_caps['appPackage'] = 'com.guotai.dazhihui'
-        desired_caps['appActivity'] = 'com.android.dazhihui.view.screen.MainScreen'
-        desired_caps['noReset'] = True
-        desired_caps['fullReset'] = False
-        desired_caps['session-override'] = True
-        #        desired_caps['unicodeKeyboard'] = True
+        desired_caps = helpers.file2dict ( "./config/desired_caps.json" )
         self.driver = webdriver.Remote ( 'http://localhost:4723/wd/hub', desired_caps )
+        # desired_caps = {}
+        # desired_caps['platformName'] = 'Android'
+        # desired_caps['platformVersion'] = '6.0'
+        # desired_caps['deviceName'] = 'QMS4C15C28005345'
+        # desired_caps['udid'] = 'QMS4C15C28005345'
+        # desired_caps['appPackage'] = 'com.guotai.dazhihui'
+        # desired_caps['appActivity'] = 'com.android.dazhihui.view.screen.MainScreen'
+        # desired_caps['noReset'] = True
+        # desired_caps['fullReset'] = False
+        # desired_caps['session-override'] = True
+        # desired_caps['unicodeKeyboard'] = True
+
 
     def alert_popup_kickout(self):
         try:
@@ -88,11 +90,13 @@ class guotai ( object ):
                 elem1 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/tv_usercenter_zjaccount' )
             except Exception:
                 try:
+                    account = helpers.file2dict ( "./config/account.json" )
+                    password = account['stockaccount']['password']
                     elem2 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/btn_usercenter_login' )
                     elem2.click()
                     elem3 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/et_password' )
                     elem3.clear ( )
-                    elem3.send_keys ( '17765178235' )
+                    elem3.send_keys ( password )
                 except Exception:
                     print ( "something wrong while login stock account" )
                     return False
@@ -104,9 +108,21 @@ class guotai ( object ):
                 return True
 
     def stock_buy(self, code, price, qty):
-        return True
+        if self.stockacount_login == True:
+            try:
+                elem1 = self.self.driver.find_element_by_xpath ('//android.widget.TextView[contains(@text,"交易")]' )
+            except Exception:
+                print ( "something wrong in deal screen" )
+                return False
+            else:
+                elem1.click()
+                elem2 = self.self.driver.find_element_by_xpath ( '//android.widget.TextView[contains(@text,"买入")]' )
+
 
     def stock_sell(self, code, price, qty):
+        return True
+
+    def stock_tickets(self):
         return True
 
     def tearDown(self):

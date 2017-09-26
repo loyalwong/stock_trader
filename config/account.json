@@ -1,10 +1,11 @@
 {
   "appaccount": {
     "user": "17765178235",
+    "password": "87994566",
     "sms_verify_code": "123456"
   },
   "stockaccount":{
     "user": "68002404",
-    "password": "87994566"
+    "password": "795146"
   }
 }

@@ -7,6 +7,7 @@ import helpers
 class trader ( object ):
     def __init__(self):
         desired_caps = helpers.file2dict ( "./config/desired_caps.json" )
+        self.account = helpers.file2dict ( "./config/account.json" )
         self.driver = webdriver.Remote ( 'http://localhost:4723/wd/hub', desired_caps )
 
     def alert_popup_kickout(self):
@@ -21,11 +22,11 @@ class trader ( object ):
             return True
 
     def mainscreen_in(self):
-        sleep ( 10 )
+#        sleep ( 10 )
         self.alert_popup_kickout ( )
-        sleep ( 10 )
+#        sleep ( 10 )
         try:
-            elem1 = self.driver.find_element_by_xpath ( '//android.widget.TextView[contains(@text,"我的")]' )
+            elem1 = self.driver.find_element_by_id('com.guotai.dazhihui:id/bottom_menu_button5')
         except Exception:
             print ( "not in mainscreen" )
             return False
@@ -43,8 +44,6 @@ class trader ( object ):
                 elem1 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/tv_usercenter_nickname' )
             except Exception:
                 try:
-                    account = helpers.file2dict ( "./config/account.json" )
-                    user = account['appaccount']['user']
                     elem2 = self.self.driver.find_element_by_xpath (
                         '//android.widget.Button[contains(@text,"立即登录/注册")]' )
                     elem2.click ( )
@@ -53,7 +52,7 @@ class trader ( object ):
                     elem3.click ( )
                     elem4 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/et_register_phonenum_smsmode' )
                     elem4.clear ( )
-                    elem4.send_keys ( user )
+                    elem4.send_keys ( self.account['appaccount']['user'] )
                     elem5 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/btn_register_get_verifycode' )
                     elem5.click ( )
                     elem6 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/et_register_verify_code' )
@@ -78,13 +77,11 @@ class trader ( object ):
                 elem1 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/tv_usercenter_zjaccount' )
             except Exception:
                 try:
-                    account = helpers.file2dict ( "./config/account.json" )
-                    password = account['stockaccount']['password']
                     elem2 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/btn_usercenter_login' )
                     elem2.click ( )
                     elem3 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/et_password' )
                     elem3.clear ( )
-                    elem3.send_keys ( password )
+                    elem3.send_keys ( self.account['stockaccount']['password'] )
                     elem4 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/btn_new_login' )
                     elem4.click()
                 except Exception:
@@ -100,7 +97,7 @@ class trader ( object ):
     def stock_buy(self, code, price, qty):
         if self.stockaccount_login ( ) == True:
             try:
-                elem1 = self.self.driver.find_element_by_xpath ( '//android.widget.TextView[contains(@text,"交易")]' )
+                elem1 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/bottom_menu_button3' )
             except Exception:
                 print ( "something wrong in deal screen" )
                 return False
@@ -108,7 +105,8 @@ class trader ( object ):
                 elem1.click ( )
                 try:
                     elem2 = self.driver.find_element_by_xpath ( '//android.widget.TextView[contains(@text,"买入")]' )
-                    elem3 = elem2.find_element_by_xpath ( '..' )
+                    elem3 = elem2.find_element_by_xpath('..')
+
                     elem3.click
                     elem4 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/stock_code_et' )
                     elem4.clear ( )

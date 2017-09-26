@@ -4,21 +4,10 @@ from appium import webdriver
 import helpers
 
 
-class guotai ( object ):
+class trader ( object ):
     def __init__(self):
         desired_caps = helpers.file2dict ( "./config/desired_caps.json" )
         self.driver = webdriver.Remote ( 'http://localhost:4723/wd/hub', desired_caps )
-        # desired_caps = {}
-        # desired_caps['platformName'] = 'Android'
-        # desired_caps['platformVersion'] = '6.0'
-        # desired_caps['deviceName'] = 'QMS4C15C28005345'
-        # desired_caps['udid'] = 'QMS4C15C28005345'
-        # desired_caps['appPackage'] = 'com.guotai.dazhihui'
-        # desired_caps['appActivity'] = 'com.android.dazhihui.view.screen.MainScreen'
-        # desired_caps['noReset'] = True
-        # desired_caps['fullReset'] = False
-        # desired_caps['session-override'] = True
-        # desired_caps['unicodeKeyboard'] = True
 
     def alert_popup_kickout(self):
         try:
@@ -96,6 +85,8 @@ class guotai ( object ):
                     elem3 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/et_password' )
                     elem3.clear ( )
                     elem3.send_keys ( password )
+                    elem4 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/btn_new_login' )
+                    elem4.click()
                 except Exception:
                     print ( "something wrong while login stock account" )
                     return False
@@ -107,7 +98,7 @@ class guotai ( object ):
                 return True
 
     def stock_buy(self, code, price, qty):
-        if self.stockacount_login ( ) == True:
+        if self.stockaccount_login ( ) == True:
             try:
                 elem1 = self.self.driver.find_element_by_xpath ( '//android.widget.TextView[contains(@text,"交易")]' )
             except Exception:
@@ -127,7 +118,7 @@ class guotai ( object ):
                     elem5.send_keys ( price )
                     elem6 = self.driver.find_element_by_id ( 'com.guotai.dazhihui:id/stock_operate_et' )
                     elem6.clear ( )
-                    elem6.send_keys ( price )
+                    elem6.send_keys ( qty )
                 except Exception:
                     return False
                 else:
